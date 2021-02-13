@@ -43,8 +43,11 @@ def getpapel(papel_):
                         #print(columns)
                         #for column in columns:
                            #print(column)
-                    papeis.remove(papel_)
+                    
                     print(papel_+" "+alldata[1][1]+" "+alldata[1][4])
+                    data_atual = datetime.datetime.strptime(alldata[1][1], "%d/%m/%y")
+                    print(data_atual.month)
+                    papeis.remove(papel_)
                     
                     
     except Exception as e:
