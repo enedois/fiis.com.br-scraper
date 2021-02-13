@@ -49,27 +49,27 @@ def getpapel(papel_):
                         columns = (row.get_text().replace("\n", " ").replace("R$ ", "").strip().split(" "))
                         alldata.append(columns)
                         #print(columns)
-                        #for column in columns:
-                           #print(column)
-
-                    alldata.pop(0)
+                        
+                    alldata.pop(0)#remove o cabecalho
                     
                     for row in alldata:
                         print(papel_+" / "+row[1]+" / "+row[4])
                         data_atual = datetime.datetime.strptime(row[1], "%d/%m/%y")
                         #grava no banco de dados
-                        mycursor = mydb.cursor()
-                        sql = "INSERT INTO `dividendo-data`(`fii_nome`, `data_pagamento`, `valor_dividendo`) VALUES (%s, %s, %s)"
-                        val = (papel_,data_atual, float(row[4].replace(",",".")))
-                        mycursor.execute(sql, val)
-                        mydb.commit()
+                        #mycursor = mydb.cursor()
+                        #sql = "INSERT INTO `dividendo-data`(`fii_nome`, `data_pagamento`, `valor_dividendo`) VALUES (%s, %s, %s)"
+                        #val = (papel_,data_atual, float(row[4].replace(",",".")))
+                        #mycursor.execute(sql, val)
+                        #mydb.commit()
                         #print(data_atual.month)
-                    
+
+                    print("Removendo o papel "+papel_+" Faltam "+str(len(papeis)))
                     papeis.remove(papel_)
                     
                     
     except Exception as e:
-        print("#ERRO: ",papel," ", str(e))
+        print("#ERRO: ",papel_," ", str(e))
+        print("Removendo o papel "+papel_+" Faltam "+str(len(papeis)))
         papeis.remove(papel_)
         #print(papeis)
     
