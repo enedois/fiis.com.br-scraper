@@ -17,22 +17,13 @@ mydb = mysql.connector.connect(
 ##carrega os papeis de stocksList.csv
 stocksList = open('FIIsList.csv', 'r')
 papeis = stocksList.read().split(';')
+print(papeis)
 #papeis = ["xppr11"]
 stocksList.close()
 
-## pegando o dia e mês
-now = datetime.datetime.now()
-dia = now.day-1
-mes = now.month
-data = str(dia)+"."+str(mes)
-
-
-## cria diretorio para a data de hoje-1 
-#if (not os.path.isdir('./'+data)):
-    #os.mkdir(data)
-
-#def faltam(papeis):
-    #print(len(papeis))
+while len(papeis)>0:
+    for papel in papeis:
+        getpapel(papel)
 
 def getpapel(papel_):
     try:
@@ -56,11 +47,11 @@ def getpapel(papel_):
                         print(papel_+" / "+row[1]+" / "+row[4])
                         data_atual = datetime.datetime.strptime(row[1], "%d/%m/%y")
                         #grava no banco de dados
-                        #mycursor = mydb.cursor()
-                        #sql = "INSERT INTO `dividendo-data`(`fii_nome`, `data_pagamento`, `valor_dividendo`) VALUES (%s, %s, %s)"
-                        #val = (papel_,data_atual, float(row[4].replace(",",".")))
-                        #mycursor.execute(sql, val)
-                        #mydb.commit()
+                        mycursor = mydb.cursor()
+                        sql = "INSERT INTO `dividendo-data`(`fii_nome`, `data_pagamento`, `valor_dividendo`) VALUES (%s, %s, %s)"
+                        val = (papel_,data_atual, float(row[4].replace(",",".")))
+                        mycursor.execute(sql, val)
+                        mydb.commit()
                         #print(data_atual.month)
 
                     print("Removendo o papel "+papel_+" Faltam "+str(len(papeis)))
@@ -74,9 +65,7 @@ def getpapel(papel_):
         #print(papeis)
     
 
-while len(papeis)>0:
-    for papel in papeis:
-        getpapel(papel)
+
             
 
 
