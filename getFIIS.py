@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 import pandas
 
 ##carrega os papeis de stocksList.csv
-stocksList = open('FIIsList.csv', 'r')
+stocksList = open('FIIsList_Carteira.csv', 'r')
 #papeis = stocksList.read().split(';')
 papeis = ["xppr11"]
 stocksList.close()

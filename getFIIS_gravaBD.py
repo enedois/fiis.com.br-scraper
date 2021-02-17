@@ -7,23 +7,19 @@ from bs4 import BeautifulSoup
 import pandas
 import mysql.connector
 
-mydb = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  password="",
-  database="fii-data"
-)
+##mydb = mysql.connector.connect(
+##  host="localhost",
+##  user="root",
+##  password="",
+##  database="fii-data"
+##)
 
 ##carrega os papeis de stocksList.csv
-stocksList = open('FIIsList.csv', 'r')
+stocksList = open('FIIsList_Carteira.csv', 'r')
 papeis = stocksList.read().split(';')
 print(papeis)
 #papeis = ["xppr11"]
 stocksList.close()
-
-while len(papeis)>0:
-    for papel in papeis:
-        getpapel(papel)
 
 def getpapel(papel_):
     try:
@@ -44,14 +40,15 @@ def getpapel(papel_):
                     alldata.pop(0)#remove o cabecalho
                     
                     for row in alldata:
-                        print(papel_+" / "+row[1]+" / "+row[4])
+                        print(papel_+" - "+row[1]+" - "+row[4])
                         data_atual = datetime.datetime.strptime(row[1], "%d/%m/%y")
-                        #grava no banco de dados
-                        mycursor = mydb.cursor()
-                        sql = "INSERT INTO `dividendo-data`(`fii_nome`, `data_pagamento`, `valor_dividendo`) VALUES (%s, %s, %s)"
-                        val = (papel_,data_atual, float(row[4].replace(",",".")))
-                        mycursor.execute(sql, val)
-                        mydb.commit()
+                        #INICIO grava no banco de dados
+                        #mycursor = mydb.cursor()
+                        #sql = "INSERT INTO `dividendo-data`(`fii_nome`, `data_pagamento`, `valor_dividendo`) VALUES (%s, %s, %s)"
+                        #val = (papel_,data_atual, float(row[4].replace(",",".")))
+                        #mycursor.execute(sql, val)
+                        #mydb.commit()
+                        #FIM grava no banco de dados
                         #print(data_atual.month)
 
                     print("Removendo o papel "+papel_+" Faltam "+str(len(papeis)))
@@ -64,7 +61,9 @@ def getpapel(papel_):
         papeis.remove(papel_)
         #print(papeis)
     
-
+while len(papeis)>0:
+    for papel in papeis:
+        getpapel(papel)
 
             
 
