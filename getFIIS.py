@@ -24,9 +24,7 @@ def getpapel(papel_):
                     
     except Exception as e:
         print("#ERRO: ",papel," ", str(e))
-        papeis.remove(papel_)
-        
-    
+        papeis.remove(papel_)   
 
 while len(papeis)>0:
     for papel in papeis:
